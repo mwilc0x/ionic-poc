@@ -22,42 +22,43 @@ var http = require('http'),
 require('./sockets/base')(io);
 
 
-    var GreetingSchema = mongoose.Schema({
-      sentence: String
-    });
-    var Greeting = mongoose.model('GreetingSchema', GreetingSchema);
+var GreetingSchema = mongoose.Schema({
+  sentence: String
+});
+var Greeting = mongoose.model('GreetingSchema', GreetingSchema);
 
-    mongoose.connect(dbPath);
+mongoose.connect(dbPath);
 
-    db = mongoose.connection;
+db = mongoose.connection;
 
-    db.once('open', function(){
-      var greeting;
-      Greeting.find(function(err, greetings) {
-        if(!greetings) {
-          greeting = new Greeting({ sentence: greets });
-          greeting.save();
-        }
-      }, function(err) {
-           console.log(err);
-      });
-    });
+db.once('open', function(){
+  var greeting;
+  Greeting.find(function(err, greetings) {
+    console.log('inside greetings');
+    if(!greetings) {
+      greeting = new Greeting({ sentence: greets });
+      greeting.save();
+    }
+  }, function(err) {
+       console.log(err);
+  });
+});
 
-    app.get('/', function(req, res) {
-      Greeting.findOne(function(err, greeting) {
-        res.send('oy');
-      });
-    });
+app.get('/', function(req, res) {
+  Greeting.findOne(function(err, greeting) {
+    res.send('oy');
+  });
+});
 
-    app.use(function(err, req, res, next) {
-      if(req.xhr) {
-        res.send(500, 'Something went wrong');
-      } else {
-        next(err);
-      }
-    });
+app.use(function(err, req, res, next) {
+  if(req.xhr) {
+    res.send(500, 'Something went wrong');
+  } else {
+    next(err);
+  }
+});
 
-    console.log('Starting node server');
-    server.listen(3000);
-    app.listen(8080);
-    console.log('Webserver listening on port 8080');
+console.log('Starting node server');
+server.listen(3000);
+app.listen(8080);
+console.log('Webserver listening on port 8080');
