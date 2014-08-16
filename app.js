@@ -12,9 +12,7 @@ require('./sockets/base')(io);
 require('./db/config')(mongoose);
 
 app.get('/', function(req, res) {
-  Greeting.findOne(function(err, greeting) {
-    res.send('oy');
-  });
+  res.send('oy');
 });
 
 app.use(function(err, req, res, next) {
