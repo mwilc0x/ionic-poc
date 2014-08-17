@@ -2,8 +2,8 @@ module.exports = function (mongoose) {
   'use strict';
   var db,
     config = {
-      'USER': process.env.USER,
-      'PASS': process.env.PASS,
+      'USER': process.env.USER || '',
+      'PASS': process.env.PASS || '',
       'HOST': process.env.HOST,
       'PORT': process.env.PORT,
       'DATABASE': process.env.DB
@@ -26,7 +26,6 @@ module.exports = function (mongoose) {
     db.once('open', function(){
       var greeting;
       Greeting.find(function(err, greetings) {
-        console.log('inside greetings');
         if(!greetings) {
           greeting = new Greeting({ sentence: greets });
           greeting.save();
