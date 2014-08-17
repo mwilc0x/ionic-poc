@@ -4,6 +4,7 @@ var http = require('http'),
     mongoose = require('mongoose'),
     express = require('express'),
     app = express(),
+    router = express.Router(),
     server = http.createServer(app),
     io = require('socket.io'),
     io = io.listen(server);
@@ -15,7 +16,7 @@ app.get('/', function(req, res) {
   res.send('oy');
 });
 
-app.get('/user', function(req, res) {
+router.get('/user', function(req, res) {
   res.send('got ye user! ar!');
 });
 
