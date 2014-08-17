@@ -7,7 +7,8 @@ var http = require('http'),
     router = express.Router(),
     server = http.createServer(app),
     io = require('socket.io'),
-    io = io.listen(server);
+    io = io.listen(server),
+    AWS = require('aws-sdk');
 
 require('./sockets/base')(io);
 require('./db/config')(mongoose);
@@ -16,7 +17,7 @@ app.get('/', function(req, res) {
   res.send('oy');
 });
 
-router.get('/user', function(req, res) {
+router.param('user', function(req, res) {
   res.send('got ye user! ar!');
 });
 
