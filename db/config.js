@@ -20,7 +20,7 @@ module.exports = function (mongoose) {
     }
 
     return {
-        init: init
+      init: init
     }
 
     /*var GreetingSchema = mongoose.Schema({
