@@ -2,10 +2,10 @@ module.exports = function (mongoose) {
   'use strict';
   var db,
     config = {
-      'USER': '',
-      'PASS': '',
-      'HOST': 'ec2-54-164-3-135.compute-1.amazonaws.com',
-      'PORT': '27017',
+      'USER': process.env.USER,
+      'PASS': process.env.PASS,
+      'HOST': process.env.HOST,
+      'PORT': process.env.PORT,
       'DATABASE': 'test'
     },
     dbPath = ['mongodb://', config.USER, ':',
