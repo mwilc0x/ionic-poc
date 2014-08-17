@@ -11,14 +11,8 @@ var http = require('http'),
 
 require('./sockets/base')(io);
 require('./db/config')(mongoose);
-
-app.get('/', function(req, res) {
-  res.send('oy');
-});
-
-app.get('/user', function(req, res) {
-  res.send('got ye user! ar!');
-});
+require('./routes/main')(app);
+require('./routes/user')(app);
 
 app.use(function(err, req, res, next) {
   if(req.xhr) {
