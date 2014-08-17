@@ -15,6 +15,10 @@ app.get('/', function(req, res) {
   res.send('oy');
 });
 
+app.get('/user', function(req, res) {
+  res.send('got ye user! ar!');
+});
+
 app.use(function(err, req, res, next) {
   if(req.xhr) {
     res.send(500, 'Something went wrong');
