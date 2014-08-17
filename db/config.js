@@ -6,7 +6,7 @@ module.exports = function (mongoose) {
       'PASS': process.env.PASS,
       'HOST': process.env.HOST,
       'PORT': process.env.PORT,
-      'DATABASE': 'test'
+      'DATABASE': process.env.DB
     },
     dbPath = ['mongodb://', config.USER, ':',
               config.PASS, '@', config.HOST,
