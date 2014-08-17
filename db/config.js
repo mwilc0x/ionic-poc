@@ -19,6 +19,10 @@ module.exports = function (mongoose) {
       return mongoose.connection;
     }
 
+    return {
+      init: init
+    }
+
     /*var GreetingSchema = mongoose.Schema({
       sentence: String
     });
