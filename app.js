@@ -7,8 +7,7 @@ var http = require('http'),
     router = express.Router(),
     server = http.createServer(app),
     io = require('socket.io'),
-    io = io.listen(server),
-    AWS = require('aws-sdk');
+    io = io.listen(server);
 
 require('./sockets/base')(io);
 require('./db/config')(mongoose);
