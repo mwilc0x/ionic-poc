@@ -8,10 +8,12 @@
       router = express.Router(),
       server = http.createServer(app),
       io = require('socket.io'),
-      io = io.listen(server);
+      io = io.listen(server),
+      db = require('./db/config')(mongoose);
+
+  db.init();
 
   require('./sockets/base')(io);
-  require('./db/config')(mongoose);
   require('./routes/main')(app);
   require('./routes/user')(app);
 
