@@ -14,16 +14,17 @@ module.exports = function (mongoose) {
               config.DATABASE].join(''),
     greets = 'Welcome to ionic app db';
 
-    var GreetingSchema = mongoose.Schema({
+    function init() {
+      mongoose.connect(dbPath);
+      return mongoose.connection;
+    }
+
+    /*var GreetingSchema = mongoose.Schema({
       sentence: String
     });
-    var Greeting = mongoose.model('GreetingSchema', GreetingSchema);
+    var Greeting = mongoose.model('GreetingSchema', GreetingSchema);*/
 
-    mongoose.connect(dbPath);
-
-    db = mongoose.connection;
-
-    db.once('open', function(){
+    /*db.once('open', function(){
       var greeting;
       Greeting.find(function(err, greetings) {
         if(!greetings) {
@@ -33,5 +34,5 @@ module.exports = function (mongoose) {
       }, function(err) {
            console.log(err);
       });
-    });
+    });*/
 };
