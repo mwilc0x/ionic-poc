@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
   res.send('oy');
 });
 
-router.param('user', function(req, res) {
+app.get('/user', function(req, res) {
   res.send('got ye user! ar!');
 });
 
