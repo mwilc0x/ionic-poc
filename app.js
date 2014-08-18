@@ -5,15 +5,15 @@
       mongoose = require('mongoose'),
       express = require('express'),
       app = express(),
-      router = express.Router(),
       server = http.createServer(app),
-      io = require('socket.io'),
-      io = io.listen(server),
-      db = require('./db/config')(mongoose);
+      //io = require('socket.io'),
+      //io = io.listen(server),
+      db = require('./db/config')();
 
-  db.init();
+  mongoose.connect(db.path);
+  mongoose.connection;
 
-  require('./sockets/base')(io);
+  //require('./sockets/base')(io);
   require('./routes/main')(app);
   require('./routes/user')(app);
 
@@ -26,7 +26,7 @@
   });
 
   console.log('Starting server');
-  server.listen(3000);
+  //server.listen(3000);
   app.listen(8080);
   console.log('Webserver listening on port 8080');
 })();

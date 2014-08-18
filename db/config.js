@@ -1,5 +1,6 @@
-module.exports = function (mongoose) {
+module.exports = function () {
   'use strict';
+
   var db,
     config = {
       'USER': process.env.USER || '',
@@ -14,13 +15,8 @@ module.exports = function (mongoose) {
               config.DATABASE].join(''),
     greets = 'Welcome to ionic app db';
 
-    function init() {
-      mongoose.connect(dbPath);
-      return mongoose.connection;
-    }
-
     return {
-      init: init
+      path: dbPath
     }
 
     /*var GreetingSchema = mongoose.Schema({
