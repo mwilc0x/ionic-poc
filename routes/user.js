@@ -2,6 +2,8 @@ module.exports = function (app) {
   'use strict';
   var User = require('../db/models/user');
 
+  console.log(User);
+
   app.get('/user/:id', function(req, res) {
     res.send('got ye user! ar! looks like ye searchin\' fer ' + req.params.id);
     var user = new User({ firstName: req.params.id });
