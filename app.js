@@ -6,7 +6,7 @@
 
 var path = require('path');
 var qs = require('querystring');
-
+var http = require('http');
 var bcrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 var express = require('express');
@@ -16,7 +16,7 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var request = require('request');
 
-var config = require('./config');
+var config = require('./config')().secrets;
 
 var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
@@ -55,11 +55,21 @@ mongoose.connect(config.MONGO_URI);
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../../client')));
+//app.use(express.static(path.join(__dirname, '../../client')));
+
+var server = http.createServer(app);
+
+app.use('/', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+ });
+
 
 /*
  |--------------------------------------------------------------------------
@@ -69,6 +79,12 @@ app.use(express.static(path.join(__dirname, '../../client')));
 app.get('/api/me', ensureAuthenticated, function(req, res) {
   res.send(req.user);
 });
+
+app.get('/', function(req, res) {
+    res.send('oy!');
+})
+
+
 
 /*
  |--------------------------------------------------------------------------
