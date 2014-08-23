@@ -15,6 +15,7 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var mongoose = require('mongoose');
 var request = require('request');
+var cors = require('cors');
 
 var config = require('./config')().secrets;
 
@@ -63,12 +64,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var server = http.createServer(app);
 
-app.use('/', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
- });
+app.use(cors());
 
 
 /*
@@ -113,6 +109,7 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
  */
 app.post('/auth/login', function(req, res) {
   User.findOne({ email: req.body.email }, '+password', function(err, user) {
+    console.log('usrr ' + user);
     if (!user) {
       return res.status(401).send({ message: 'Wrong email and/or password' });
     }
