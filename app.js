@@ -19,6 +19,8 @@ var cors = require('cors');
 
 var config = require('./config')().secrets;
 
+var Schema = mongoose.Schema;
+
 var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
   password: { type: String, select: false },
@@ -29,6 +31,13 @@ var userSchema = new mongoose.Schema({
   github: String,
   linkedin: String,
   twitter: String
+});
+
+var postSchema = new mongoose.Schema({
+  body: String,
+  date: Date,
+  postLocation: String,
+  user: { type: Schema.ObjectId, ref: 'User' }
 });
 
 userSchema.pre('save', function(next) {
@@ -50,7 +59,8 @@ userSchema.methods.comparePassword = function(password, done) {
   });
 };
 
-var User = mongoose.model('User', userSchema);
+var User = mongoose.model('User', userSchema),
+    Post = mongoose.model('Post', postSchema);
 
 mongoose.connect(config.MONGO_URI);
 
@@ -142,6 +152,15 @@ app.post('/auth/signup', function(req, res) {
   });
 });
 
+app.post('/auth/post', function(req, res) {
+  var post = new Post();
+  post.body = req.body.text;
+  post.date = new Date(Date.now());
+  post.user = req.body.userID;
+  post.save(function(err) {
+    res.status(200).end();
+  });
+});
 /*
  |--------------------------------------------------------------------------
  | Login with Google
