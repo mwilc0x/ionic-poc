@@ -152,13 +152,36 @@ app.post('/auth/signup', function(req, res) {
   });
 });
 
-app.post('/auth/post', function(req, res) {
+/*
+ *  |--------------------------------------------------------------------------
+ *  | Post to timeline
+ *  |--------------------------------------------------------------------------
+ */
+
+
+app.post('/timeline/post', function(req, res) {
   var post = new Post();
   post.body = req.body.text;
   post.date = new Date(Date.now());
   post.user = req.body.userID;
   post.save(function(err) {
     res.status(200).end();
+  });
+});
+
+app.get('/timeline/posts', function(req, res) {
+  
+  var posts = [],
+      query;
+
+  query = Post.find( { 'user': req.query.id }, 'body date location' );
+
+  query.exec(function(err, post) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.send(post);
+    }
   });
 });
 /*
