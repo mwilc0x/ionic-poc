@@ -174,7 +174,7 @@ app.get('/timeline/posts', function(req, res) {
   var posts = [],
       query;
 
-  query = Post.find( { 'user': req.query.id }, 'body date location' );
+  query = Post.find( { 'user': req.query.id }, 'body date location').sort('-date');
 
   query.exec(function(err, post) {
     if(err) {
